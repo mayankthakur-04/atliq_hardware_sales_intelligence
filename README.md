@@ -281,7 +281,7 @@ Patna (5.4%), Bhubaneshwar (4.0%), Mumbai (3.9%) and Bhopal (3.9%) have healthy 
 **1. Set up the database**
 ```sql
 -- Import the provided SQL dump
-source db_dump_version_2.sql;
+source db_AtliQ_Hardware.sql;
 USE sales;
 ```
 
