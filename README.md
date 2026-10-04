@@ -87,24 +87,24 @@ The project uses a **Star Schema** with one central fact table connected to four
 - Columns: customer_code, market_code, order_date, product_code, qty, sales_amount, profit_margin, profit_margin_percentage, cost_price
 
 **Dimension Tables:**
-- `sales customers` — customer name and type (Brick & Mortar / E-Commerce)
-- `sales markets` — market name and zone (North / Central / South)
-- `sales products` — product code and type (Own Brand / Distribution)
-- `sales date` — full date hierarchy with month names and year
+- `sales customers` customer name and type (Brick & Mortar / E-Commerce)
+- `sales markets` market name and zone (North / Central / South)
+- `sales products` product code and type (Own Brand / Distribution)
+- `sales date` full date hierarchy with month names and year
 
 **Relationships:** All Many-to-One from fact to dimensions.
 
 ---
 
-## SQL Views — Why They Exist
+## SQL Views: Why They Exist
 
 The raw database had a few data quality issues that needed to be handled before Power BI ever saw the data:
 
-1. **Invalid market data** — Mark097 (New York) and Mark999 (Paris) existed in the markets table but AtliQ Hardware only operates in India. These were inflating revenue numbers.
+1. **Invalid market data**: Mark097 (New York) and Mark999 (Paris) existed in the markets table but AtliQ Hardware only operates in India. These were inflating revenue numbers.
 
-2. **Currency mismatch** — Some transactions were recorded in USD. Comparing INR and USD values without conversion would produce meaningless aggregates.
+2. **Currency mismatch**: Some transactions were recorded in USD. Comparing INR and USD values without conversion would produce meaningless aggregates.
 
-3. **Duplicate joins** — Power BI was doing heavy JOIN operations on every refresh across 500K+ rows.
+3. **Duplicate joins**: Power BI was doing heavy JOIN operations on every refresh across 500K+ rows.
 
 The SQL views solve all three problems at the database level, so Power BI always receives clean, pre-filtered data.
 
@@ -127,10 +127,10 @@ AND m.zone != '';
 ```
 
 Additional views created:
-- `v_monthly_revenue` — pre-aggregated monthly revenue by market and zone
-- `v_customer_performance` — customer-level revenue, profit, and avg daily revenue
-- `v_product_performance` — product-level revenue and margin summary
-- `v_yoy_comparison` — year-over-year revenue pivot by market
+- `v_monthly_revenue` pre-aggregated monthly revenue by market and zone
+- `v_customer_performance` customer-level revenue, profit, and avg daily revenue
+- `v_product_performance` product-level revenue and margin summary
+- `v_yoy_comparison` year-over-year revenue pivot by market
 
 ---
 
@@ -177,7 +177,7 @@ IF(
 
 ## Dashboard Pages
 
-### Page 1 — Executive Summary
+### Page 1: Executive Summary
 
 The landing page for senior leadership. Shows the overall health of the business at a glance.
 
@@ -194,7 +194,7 @@ The landing page for senior leadership. Shows the overall health of the business
 
 ---
 
-### Page 2 — Key Insights
+### Page 2: Key Insights
 
 Designed for sales managers who need to understand where volume and revenue is coming from, and how it has changed over time.
 
@@ -211,7 +211,7 @@ Designed for sales managers who need to understand where volume and revenue is c
 
 ---
 
-### Page 3 — Profit Analysis
+### Page 3: Profit Analysis
 
 The most important page for business decisions. Shows which markets and customers are actually making money vs burning it.
 
@@ -226,13 +226,13 @@ The most important page for business decisions. Shows which markets and customer
 - Customer profitability table (Revenue, Revenue Contribution%, Profit Margin Contribution%, Profit Margin%)
 
 **Key findings:**
-- **Bengaluru: -27.2% profit margin** — the company is losing money on every rupee of sales here
+- **Bengaluru: -27.2% profit margin** the company is losing money on every rupee of sales here
 - **14 markets are loss-making** when the full dataset is considered
 - Patna (5.4%) and Bhubaneshwar (4.0%) are the most profitable markets despite low revenue
 
 ---
 
-### Page 4 — Performance Insights
+### Page 4: Performance Insights
 
 Zone-level deep dive with the What-If profit target parameter. Useful for quarterly business reviews.
 
@@ -257,13 +257,13 @@ After building and analyzing this dashboard, here are the most important finding
 Delhi NCR alone accounts for 47% of total revenue. If AtliQ loses Electricalsara Stores (their single largest customer at 33.4% revenue contribution), the business takes a severe hit. This level of concentration is dangerous.
 
 **Bengaluru is a Structural Problem**
-A -27.2% profit margin is not a bad quarter — it is a broken market. Either the pricing strategy, the customer mix, or the cost structure in Bengaluru needs a fundamental rethink. Continuing operations there at this margin is destroying value.
+A -27.2% profit margin is not a bad quarter it is a broken market. Either the pricing strategy, the customer mix, or the cost structure in Bengaluru needs a fundamental rethink. Continuing operations there at this margin is destroying value.
 
 **2020 Decline is Real and Steep**
-Revenue peaked in 2018-2019 at around 213M and dropped to 77M in 2020 — a 64% decline. The Sales QTY chart confirms this is not just a pricing issue but a genuine volume decline. Understanding the cause (COVID-19 impact, competition, customer churn) is critical before making investment decisions.
+Revenue peaked in 2018-2019 at around 213M and dropped to 77M in 2020 a 64% decline. The Sales QTY chart confirms this is not just a pricing issue but a genuine volume decline. Understanding the cause (COVID-19 impact, competition, customer churn) is critical before making investment decisions.
 
 **Own Brand vs Distribution**
-The product type filter across all pages allows comparison between Own Brand and Distribution products. Distribution products contribute higher volume but Own Brand products typically carry better margins — a pattern worth exploring in depth.
+The product type filter across all pages allows comparison between Own Brand and Distribution products. Distribution products contribute higher volume but Own Brand products typically carry better margins a pattern worth exploring in depth.
 
 **Most Profitable Markets are Being Underserved**
 Patna (5.4%), Bhubaneshwar (4.0%), Mumbai (3.9%) and Bhopal (3.9%) have healthy margins but low revenue contribution. These markets may represent growth opportunities with better sales coverage.
@@ -342,7 +342,7 @@ atliq-hardware-sales-intelligence/
 
 ## What I Learned
 
-This project was a good reminder that dashboards are not about making things look nice — they are about making decisions easier. The most valuable part of this build was not writing the DAX or designing the visuals. It was deciding which questions the business actually needs answered, and then making sure those questions have a clear, honest answer somewhere on the screen.
+This project was a good reminder that dashboards are not about making things look nice they are about making decisions easier. The most valuable part of this build was not writing the DAX or designing the visuals. It was deciding which questions the business actually needs answered, and then making sure those questions have a clear, honest answer somewhere on the screen.
 
 A few specific things this project reinforced:
 
